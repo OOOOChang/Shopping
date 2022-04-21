@@ -2,6 +2,27 @@
   text-align: center;
 }
 
+.jumbo {
+  background-color: #e9ecef;
+  background-image: url('./background.jpg');
+  background-size: cover;
+  color: white;
+  width: 100%;
+  height: 300px;
+  display: inline-block;
+  margin-top: 50px;
+}
+
+.jumbotitle {
+  margin-top: 20px;
+  font-size: 45px;
+  font-weight: bold;
+}
+
+.jumbotext {
+  font-size: 20px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
