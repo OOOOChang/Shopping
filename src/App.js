@@ -6,11 +6,14 @@ import { Navbar,Nav,NavDropdown,Form,Button,FormControl,Container } from 'react-
 import item from './data.js'
 import { Link, Route, Switch } from 'react-router-dom';
 import Detail from './detail.js'
+import axios from 'axios';
+
 
 function App() {
 
   let [shoes, shoes변경] = useState(item);                    //중요데이터는 최상위 컴포넌트에서 관리하도록 하는것이 관습
   let [show, showChange] = useState(false);
+  let [ajax데이터, ajax변경] =useState([]);
   
   return (
 
@@ -48,19 +51,31 @@ function App() {
         ?<ItemList shoes={shoes}/>
         : null
         }
+        <Button variant="info" onClick={()=>{
+        axios.get('https://codingapple1.github.io/shop/data2.json')           //axios를 이용한 ajax 요청
+        .then((result)=>{
+          ajax변경(result.data);
+        })
+        .catch(()=>{console.log('실패')})      
+      }}>더보기</Button>
+      <MoreList ajax데이터={ajax데이터} />    
       </Route>
+      
 
         {/* 상세페이지 */}
 
       <Route path='/detail/:id'>
         <Detail shoes={shoes} />
+        {/* <MoreList ajax데이터={ajax데이터}/> */}
       </Route>
+
+      
 
       <Route path='/:id'>
         <div>아무거나</div>
       </Route>
       
-    </Switch>    
+    </Switch>
     </div>
   );
 }
@@ -99,7 +114,29 @@ function ItemList(props){
               { item.img }
               <h4>{ item.title }</h4>
               <p>{ item.content } & { item.price }</p>
+              
             </div>
+            
+          )
+        })
+        }
+      </div>
+    </div>
+  )
+}
+
+function MoreList(props){
+  return(
+    <div className='container'>
+      <div className='row'>
+        { props.ajax데이터.map(function(b,i){
+          return(
+            <div className='col-md-4' key={i}>
+              <h4>{ b.title }</h4>
+              <p>{ b.content } & { b.price }</p>
+              
+            </div>
+            
           )
         })
         }
